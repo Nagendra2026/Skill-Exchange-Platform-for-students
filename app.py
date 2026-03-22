@@ -11,6 +11,46 @@ from ml_engine.matching import compute_similarity
 app = Flask(__name__)
 app.secret_key = "secret"
 
+# ---------------- DATABASE INITIALIZATION ----------------
+def init_db():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Users table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    password TEXT,
+    role TEXT)
+    ''')
+
+    # Skills table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS skills(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    skill TEXT,
+    type TEXT)
+    ''')
+
+    # Sessions table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS sessions(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    teacher_id INTEGER,
+    learner_id INTEGER,
+    skill TEXT,
+    status TEXT,
+    meeting_link TEXT)
+    ''')
+
+    conn.commit()
+    conn.close()
+
+init_db()  # Initialize database on app startup
+
 # ---------------- FILE UPLOAD CONFIG ----------------
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
