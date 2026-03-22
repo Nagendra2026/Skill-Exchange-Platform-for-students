@@ -630,7 +630,7 @@ def predict_success():
     )
 
 # ----------------- FEATURE IMPORTANCE ----------------
-import pandas as pd
+import csv
 
 @app.route("/feature-importance")
 def feature_importance():
@@ -638,10 +638,17 @@ def feature_importance():
     if "user" not in session:
         return redirect("/login")
 
-    df = pd.read_csv("ml_engine/feature_importance.csv")
-    df = df.sort_values(by="importance", ascending=False)
+    data = []
+    with open("ml_engine/feature_importance.csv", "r") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            row["importance"] = float(row["importance"])
+            data.append(row)
 
-    return render_template("feature_importance.html", data=df.to_dict(orient="records"))
+    # Sort by importance descending
+    data.sort(key=lambda x: x["importance"], reverse=True)
+
+    return render_template("feature_importance.html", data=data)
 
 # ----------------- CONFUSION MATRIX ----------------
 @app.route("/confusion-matrix")
