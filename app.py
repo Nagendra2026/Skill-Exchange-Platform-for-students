@@ -575,7 +575,8 @@ def logout():
     return redirect("/")
 
 # ---------------- LOAD ML MODEL ----------------
-model = joblib.load("ml_engine/learning_model.pkl")
+# Temporarily disabled due to deployment constraints
+# model = joblib.load("ml_engine/learning_model.pkl")
 
 
 
@@ -610,19 +611,17 @@ def predict_success():
     session_duration = 60
     response_time = 5
 
-    features = np.array([[ 
-        skill_similarity,
-        sessions_completed,
-        rating,
-        coding_submissions,
-        discussion_activity,
-        session_duration,
-        response_time
-    ]])
+    # Simple rule-based prediction (temporary replacement for ML model)
+    score = (
+        skill_similarity * 0.3 +
+        min(sessions_completed / 10, 1) * 0.2 +
+        min(rating / 5, 1) * 0.2 +
+        min(coding_submissions / 20, 1) * 0.15 +
+        min(discussion_activity / 50, 1) * 0.15
+    )
 
-    prediction = model.predict(features)[0]
-    probability = model.predict_proba(features)[0][1]
-
+    prediction = 1 if score > 0.6 else 0
+    probability = min(max(score, 0.1), 0.9)  # Between 10% and 90%
     return render_template(
         "prediction_result.html",
         prediction=prediction,
