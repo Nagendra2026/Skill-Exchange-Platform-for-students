@@ -17,11 +17,7 @@
 - **Free tier** is available
 
 ### 3. Add Environment Variables
-- Click "Environment"
-- Add these **required** variables:
-  - `ZOOM_ACCOUNT_ID`: Your Zoom Account ID
-  - `ZOOM_CLIENT_ID`: Your Zoom Client ID
-  - `ZOOM_CLIENT_SECRET`: Your Zoom Client Secret
+- **No environment variables required!** (We switched from Zoom to Jitsi Meet)
 - Optional variables:
   - `FLASK_ENV`: `production`
   - `FLASK_SECRET_KEY`: (your secret key)
@@ -34,9 +30,10 @@
 ## 📝 Notes:
 - Database will reset on free tier restarts (use PostgreSQL for persistence)
 - First request may be slow (free tier sleeps after 15 min inactivity)
+- Uses Jitsi Meet for video conferencing (no API keys required!)
 - Recommend upgrading to paid tier for production use
 
 ## ⚠️ Important:
 - Update `app.secret_key = "secret"` to use environment variable
 - Never commit sensitive keys to GitHub
-- Get Zoom API credentials from: https://marketplace.zoom.us/
+- Meetings now use Jitsi Meet (free, no API setup required!)
