@@ -253,18 +253,11 @@ def approve(id):
     except Exception as e:
         print(f"⚠️ Zoom API Error (session will be approved without link): {str(e)}")
 
-    # Update status regardless of Zoom success
-    if zoom_link:
-        db.execute(
-            "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
-            (zoom_link, id)
-        )
-    else:
-        # Approve without Zoom link (user can still communicate)
-        db.execute(
-            "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
-            ("Zoom link generation failed - manual setup may be needed", id)
-        )
+    # Update status with zoom_link (can be None)
+    db.execute(
+        "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
+        (zoom_link, id)
+    )
     
     db.commit()
     print(f"✅ Session {id} approved in database")
@@ -272,7 +265,7 @@ def approve(id):
     if zoom_link:
         return "✅ Session approved with Zoom link"
     else:
-        return "⚠️ Session approved but Zoom link could not be generated. Manual setup may be needed."
+        return "⚠️ Session approved but Zoom link could not be generated. You can still chat with the student."
 # ---------------- FIND MATCH ----------------
 @app.route("/find-matches")
 def find_matches():
