@@ -245,8 +245,11 @@ def approve(id):
 
     try:
         zoom_link = create_meeting()
-    except:
-        zoom_link = "https://zoom.us/j/123456789"
+        if not zoom_link:
+            return "❌ Failed to create Zoom meeting. Check server logs for details.", 500
+    except Exception as e:
+        print(f"❌ Error creating Zoom meeting: {str(e)}")
+        return f"❌ Error: {str(e)}", 500
 
     db.execute(
         "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
@@ -254,7 +257,7 @@ def approve(id):
     )
     db.commit()
 
-    return "ok"
+    return "✅ Session approved with Zoom link"
 # ---------------- FIND MATCH ----------------
 @app.route("/find-matches")
 def find_matches():
