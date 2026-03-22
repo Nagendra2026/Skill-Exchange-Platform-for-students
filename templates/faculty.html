@@ -90,18 +90,24 @@ Logout
 <!-- JS -->
 <script>
 function approveSession(id){
-fetch("/approve/"+id,{
-method:"POST"
-})
-.then(response=>response.text())
-.then(data=>{
-alert("Session Approved + Zoom Link Generated 🔥");
-location.reload();
-})
-.catch(err=>{
-alert("Error approving session");
-console.log(err);
-});
+  fetch("/approve/"+id,{
+    method:"POST"
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error("HTTP Status: " + response.status);
+    }
+  })
+  .then(data => {
+    alert(data);
+    location.reload();
+  })
+  .catch(err => {
+    alert("❌ Error approving session: " + err);
+    console.log(err);
+  });
 }
 
 function rejectSession(id){

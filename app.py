@@ -242,22 +242,37 @@ def faculty_dashboard():
 @app.route("/approve/<int:id>", methods=["POST"])
 def approve(id):
     db = get_db()
+    zoom_link = None
 
     try:
         zoom_link = create_meeting()
-        if not zoom_link:
-            return "❌ Failed to create Zoom meeting. Check server logs for details.", 500
+        if zoom_link:
+            print(f"✅ Zoom link created: {zoom_link}")
+        else:
+            print(f"⚠️ Zoom meeting creation returned None - API might be unavailable")
     except Exception as e:
-        print(f"❌ Error creating Zoom meeting: {str(e)}")
-        return f"❌ Error: {str(e)}", 500
+        print(f"⚠️ Zoom API Error (session will be approved without link): {str(e)}")
 
-    db.execute(
-        "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
-        (zoom_link, id)
-    )
+    # Update status regardless of Zoom success
+    if zoom_link:
+        db.execute(
+            "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
+            (zoom_link, id)
+        )
+    else:
+        # Approve without Zoom link (user can still communicate)
+        db.execute(
+            "UPDATE sessions SET status='approved', zoom_link=? WHERE id=?",
+            ("Zoom link generation failed - manual setup may be needed", id)
+        )
+    
     db.commit()
+    print(f"✅ Session {id} approved in database")
 
-    return "✅ Session approved with Zoom link"
+    if zoom_link:
+        return "✅ Session approved with Zoom link"
+    else:
+        return "⚠️ Session approved but Zoom link could not be generated. Manual setup may be needed."
 # ---------------- FIND MATCH ----------------
 @app.route("/find-matches")
 def find_matches():
