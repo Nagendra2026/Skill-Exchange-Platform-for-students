@@ -331,15 +331,19 @@ def my_sessions():
     db = get_db()
 
     sessions = db.execute("""
-    SELECT users.name as teacher,
-           sessions.skill,
-           sessions.status,
-           sessions.zoom_link
-    FROM sessions
-    JOIN users ON sessions.teacher_id = users.id
-    WHERE sessions.learner_id=?
-    ORDER BY sessions.id DESC
-    """,(session["id"],)).fetchall()
+    SELECT
+        s.id,
+        t.name AS teacher,
+        l.name AS learner,
+        s.skill,
+        s.status,
+        s.zoom_link
+    FROM sessions s
+    JOIN users t ON s.teacher_id = t.id
+    JOIN users l ON s.learner_id = l.id
+    WHERE s.learner_id = ? OR s.teacher_id = ?
+    ORDER BY s.id DESC
+    """, (session["id"], session["id"])) .fetchall()
 
     return render_template("my_sessions.html", sessions=sessions)
 
