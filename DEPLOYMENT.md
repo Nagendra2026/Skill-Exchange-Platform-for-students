@@ -18,10 +18,13 @@
 
 ### 3. Add Environment Variables
 - Click "Environment"
-- Add these if needed:
+- Add these **required** variables:
+  - `ZOOM_ACCOUNT_ID`: Your Zoom Account ID
+  - `ZOOM_CLIENT_ID`: Your Zoom Client ID
+  - `ZOOM_CLIENT_SECRET`: Your Zoom Client Secret
+- Optional variables:
   - `FLASK_ENV`: `production`
   - `FLASK_SECRET_KEY`: (your secret key)
-  - `ZOOM_API_KEY`: (your Zoom API key)
 
 ### 4. Deploy
 - Click "Create Web Service"
@@ -36,3 +39,4 @@
 ## ⚠️ Important:
 - Update `app.secret_key = "secret"` to use environment variable
 - Never commit sensitive keys to GitHub
+- Get Zoom API credentials from: https://marketplace.zoom.us/

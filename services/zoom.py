@@ -1,10 +1,11 @@
 import requests
 import base64
+import os
 
-# 🔑 paste your keys here
-ACCOUNT_ID = "PASTE_ACCOUNT_ID"
-CLIENT_ID = "PASTE_CLIENT_ID"
-CLIENT_SECRET = "PASTE_CLIENT_SECRET"
+# 🔑 Zoom API Credentials (use environment variables for security)
+ACCOUNT_ID = os.environ.get("ZOOM_ACCOUNT_ID", "PASTE_ACCOUNT_ID")
+CLIENT_ID = os.environ.get("ZOOM_CLIENT_ID", "PASTE_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("ZOOM_CLIENT_SECRET", "PASTE_CLIENT_SECRET")
 
 # ---------- GET ACCESS TOKEN ----------
 def get_access_token():
