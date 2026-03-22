@@ -78,10 +78,20 @@ Approved
 Join Meeting
 </button>
 </a>
+<br>
+<button onclick="markCompleted('{{s.id}}')" class="mt-1 bg-green-700 hover:bg-green-900 text-white px-3 py-1 rounded text-sm">
+Mark as Completed
+</button>
 {% else %}
 <br>
 <span class="text-gray-500 text-sm">Meeting link generating...</span>
 {% endif %}
+
+<!-- COMPLETED -->
+{% elif s.status == "completed" %}
+<span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
+Meeting Completed ✅
+</span>
 
 <!-- PENDING -->
 {% elif s.status == "pending" %}
@@ -104,6 +114,30 @@ Rejected
 </table>
 
 </div>
+
+<script>
+function markCompleted(sessionId) {
+    fetch('/complete-meeting/' + sessionId, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Meeting marked as completed!');
+            location.reload(); // Refresh the page to show updated status
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while marking the meeting as completed.');
+    });
+}
+</script>
 
 </body>
 </html>

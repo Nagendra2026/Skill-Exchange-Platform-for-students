@@ -317,13 +317,13 @@ def find_matches():
     return render_template("matches.html", matches=matches)
 
 
-# ---------------- REJECT SESSION ----------------
-@app.route("/reject/<int:id>", methods=["POST"])
-def reject(id):
+# ---------------- MARK MEETING COMPLETED ----------------
+@app.route("/complete-meeting/<int:id>", methods=["POST"])
+def complete_meeting(id):
     db = get_db()
-    db.execute("UPDATE sessions SET status='rejected' WHERE id=?", (id,))
+    db.execute("UPDATE sessions SET status='completed' WHERE id=?", (id,))
     db.commit()
-    return "ok"
+    return "✅ Meeting marked as completed!"
 
 # ---------------- MY SESSIONS ----------------
 @app.route("/my-sessions")
