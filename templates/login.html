@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+<body class="bg-gradient-to-r from-purple-700 to-indigo-700 h-screen flex items-center justify-center">
+
+<div class="bg-white p-10 rounded-2xl shadow-2xl w-96">
+
+<h2 class="text-3xl font-bold text-center mb-6 text-purple-700">Student Login</h2>
+
+<!-- 🔥 IMPORTANT: action="/login-user" -->
+<form action="/login-user" method="POST">
+
+<input name="email" placeholder="Email"
+class="border p-3 w-full mb-4 rounded" required>
+
+<input name="password" type="password" placeholder="Password"
+class="border p-3 w-full mb-4 rounded" required>
+
+<button class="bg-purple-700 text-white w-full p-3 rounded font-bold hover:bg-purple-900">
+Login
+</button>
+
+</form>
+
+<p class="text-center mt-4">
+New user?
+<a href="/register" class="text-purple-700 font-bold">Register</a>
+</p>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Skill Matches</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gray-100">
+
+<!-- Header -->
+<div class="bg-purple-700 text-white p-5 flex justify-between">
+<h1 class="text-2xl font-bold">AI Skill Matches 🤖</h1>
+<a href="/dashboard" class="bg-white text-purple-700 px-4 py-2 rounded">
+Dashboard
+</a>
+</div>
+
+<div class="p-10">
+
+{% if matches|length == 0 %}
+<h2 class="text-xl font-bold text-red-500">
+No intelligent matches found 😢
+</h2>
+
+{% else %}
+
+<div class="grid grid-cols-3 gap-6">
+
+{% for m in matches %}
+
+<div class="bg-white p-6 rounded-xl shadow-lg hover:scale-105 transition">
+
+<h2 class="text-xl font-bold text-purple-700">
+{{m.teacher}}
+</h2>
+
+<p class="text-gray-600">
+{{m.email}}
+</p>
+
+<div class="mt-3">
+<span class="text-green-600 font-bold text-lg">
+Similarity: {{m.similarity}}%
+</span>
+</div>
+
+<div class="mt-4">
+<button onclick="requestSession('{{m.email}}')"
+class="bg-purple-700 text-white px-6 py-2 rounded hover:bg-purple-900">
+Request Session
+</button>
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+<script>
+function requestSession(email){
+
+fetch("/request-session",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+email:email,
+skill:"AI Matched Skill"
+})
+})
+.then(res=>res.json())
+.then(data=>{
+alert(data.msg)
+})
+}
+</script>
+
+</body>
+</html>

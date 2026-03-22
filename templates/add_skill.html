@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Skill</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gradient-to-r from-purple-600 to-indigo-600 min-h-screen flex items-center justify-center">
+
+<div class="bg-white p-10 rounded-2xl shadow-2xl w-96">
+
+<h2 class="text-3xl font-bold text-center mb-6 text-purple-700">Add Skill 🚀</h2>
+
+<label class="font-semibold">Skill Name</label>
+<input id="skill" placeholder="Enter skill (Python, Java, AI...)" 
+class="border p-3 w-full mb-4 rounded focus:ring-2 focus:ring-purple-400">
+
+<label class="font-semibold">Skill Type</label>
+<select id="type" class="border p-3 w-full mb-6 rounded">
+<option value="teach">I can Teach</option>
+<option value="learn">I want to Learn</option>
+</select>
+
+<button onclick="addSkill()" 
+class="bg-purple-700 text-white w-full p-3 rounded font-bold hover:bg-purple-900 transition">
+Add Skill
+</button>
+
+<div id="msg" class="text-center mt-4 font-bold"></div>
+
+<!-- buttons -->
+<div class="flex justify-between mt-6">
+<a href="/dashboard">
+<button class="bg-gray-200 px-4 py-2 rounded">⬅ Dashboard</button>
+</a>
+
+<button onclick="window.location.reload()" class="bg-blue-500 text-white px-4 py-2 rounded">
+Add More
+</button>
+</div>
+
+</div>
+
+<script>
+function addSkill(){
+let skill=document.getElementById("skill").value
+let type=document.getElementById("type").value
+
+if(skill==""){
+document.getElementById("msg").innerHTML="⚠ Enter skill first"
+document.getElementById("msg").style.color="red"
+return
+}
+
+fetch("/add-skill",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({skill:skill,type:type})
+})
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("msg").innerHTML="✅ Skill added successfully!"
+document.getElementById("msg").style.color="green"
+
+document.getElementById("skill").value=""
+
+setTimeout(()=>{
+window.location.href="/dashboard"
+},1500)
+})
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Prediction Result</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-10 rounded-2xl shadow-xl text-center">
+
+<h1 class="text-3xl font-bold mb-6 text-purple-700">
+Learning Success Prediction
+</h1>
+
+{% if prediction == 1 %}
+<p class="text-green-600 text-xl font-semibold">
+High Probability of Successful Learning 🎯
+</p>
+{% else %}
+<p class="text-red-600 text-xl font-semibold">
+Low Probability — Needs Improvement ⚠️
+</p>
+{% endif %}
+
+<p class="mt-4 text-gray-600">
+Confidence Score: {{probability}}%
+</p>
+
+<a href="/dashboard">
+<button class="mt-6 bg-purple-700 text-white px-6 py-3 rounded-full">
+Back to Dashboard
+</button>
+</a>
+
+</div>
+
+</body>
+</html>

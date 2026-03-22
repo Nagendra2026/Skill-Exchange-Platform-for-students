@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Exchange Platform</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+background: linear-gradient(135deg,#5f2c82,#49a09d);
+font-family: 'Segoe UI', sans-serif;
+color:white;
+}
+
+/* floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-20px);}
+100%{transform:translateY(0px);}
+}
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 NAVBAR -->
+<div class="flex justify-between items-center p-6 bg-transparent">
+<h1 class="text-3xl font-bold">SkillExchange</h1>
+
+<div>
+<a href="/login" class="bg-white text-purple-700 px-6 py-2 rounded-full font-bold mr-3 hover:scale-110 transition">
+Login
+</a>
+
+<a href="/register" class="bg-yellow-400 text-black px-6 py-2 rounded-full font-bold hover:scale-110 transition">
+Register
+</a>
+</div>
+</div>
+
+<!-- 🔥 HERO SECTION -->
+<section class="flex flex-col items-center justify-center text-center py-24">
+
+<h1 class="text-6xl font-extrabold mb-6 float">Learn • Teach • Grow 🚀</h1>
+
+<p class="text-xl mb-10 max-w-2xl">
+Peer-to-peer smart learning platform where students and faculty collaborate,
+share skills and grow together through real-time sessions.
+</p>
+
+<a href="/register" class="bg-white text-purple-700 px-10 py-4 rounded-full text-xl font-bold hover:scale-110 transition shadow-xl">
+Get Started
+</a>
+
+</section>
+
+<!-- 🔥 ABOUT -->
+<section class="bg-white text-gray-800 py-20 text-center">
+<h2 class="text-4xl font-bold text-purple-700 mb-6">About Platform</h2>
+
+<p class="max-w-3xl mx-auto text-lg">
+Skill Exchange Platform is a university-based peer learning system where students 
+can teach skills they know and learn skills they need. Faculty can monitor sessions 
+and approve learning activities to ensure quality knowledge sharing. The platform 
+encourages collaborative learning beyond classrooms using smart matching and 
+real-time session integration.
+</p>
+</section>
+
+<!-- 🔥 FEATURES -->
+<section class="py-20 text-center">
+<h2 class="text-4xl font-bold mb-12">Key Features</h2>
+
+<div class="grid md:grid-cols-3 gap-10 px-10">
+
+<div class="bg-white text-black p-8 rounded-2xl shadow-xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">🎓 Skill Sharing</h3>
+<p>Students teach and learn skills from peers easily.</p>
+</div>
+
+<div class="bg-white text-black p-8 rounded-2xl shadow-xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">🤝 Smart Matching</h3>
+<p>Automatically connects students based on skills.</p>
+</div>
+
+<div class="bg-white text-black p-8 rounded-2xl shadow-xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">👨‍🏫 Faculty Monitoring</h3>
+<p>Faculty approves and monitors sessions.</p>
+</div>
+
+<div class="bg-white text-black p-8 rounded-2xl shadow-xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">📅 Session Booking</h3>
+<p>Book learning sessions with matched peers.</p>
+</div>
+
+<div class="bg-white text-black p-8 rounded-2xl shadow-xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">🎥 Zoom Integration</h3>
+<p>Auto meeting links for real-time learning.</p>
+</div>
+
+<div class="bg-white text-black p-8 rounded-2xl shadow-xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">🏆 Gamified Learning</h3>
+<p>Encourages consistent participation.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 🔥 HOW IT WORKS -->
+<section class="bg-white text-gray-800 py-20 text-center">
+<h2 class="text-4xl font-bold text-purple-700 mb-10">How It Works</h2>
+
+<div class="grid md:grid-cols-4 gap-8 px-10">
+
+<div>
+<h1 class="text-5xl mb-3">1️⃣</h1>
+<p>Register as student/faculty</p>
+</div>
+
+<div>
+<h1 class="text-5xl mb-3">2️⃣</h1>
+<p>Add skills to teach/learn</p>
+</div>
+
+<div>
+<h1 class="text-5xl mb-3">3️⃣</h1>
+<p>Find matches</p>
+</div>
+
+<div>
+<h1 class="text-5xl mb-3">4️⃣</h1>
+<p>Join session via Zoom</p>
+</div>
+
+</div>
+</section>
+
+<!-- 🔥 FOOTER -->
+<footer class="bg-black text-center py-6">
+<p>© 2026 Skill Exchange Platform | Major Project</p>
+</footer>
+
+</body>
+</html>

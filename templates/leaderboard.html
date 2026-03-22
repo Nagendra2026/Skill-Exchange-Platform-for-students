@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Leaderboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gray-100">
+
+<div class="bg-yellow-500 text-white p-5 flex justify-between">
+<h1 class="text-2xl font-bold">Top Coders Leaderboard 🏆</h1>
+
+<a href="/dashboard">
+<button class="bg-white text-black px-4 py-2 rounded">Dashboard</button>
+</a>
+</div>
+
+<div class="p-10">
+
+<table class="w-full bg-white shadow-xl rounded-xl overflow-hidden">
+
+<tr class="bg-yellow-400 text-black">
+<th class="p-3">Rank</th>
+<th>Name</th>
+<th>Submissions</th>
+</tr>
+
+{% for l in leaders %}
+<tr class="text-center border-b">
+<td class="p-3 font-bold">{{loop.index}}</td>
+<td>{{l.name}}</td>
+<td>{{l.total}}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

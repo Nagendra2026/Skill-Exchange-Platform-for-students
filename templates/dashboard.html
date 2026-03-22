@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Skill Exchange Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+</head>
+
+<body class="text-white font-sans">
+
+<div class="flex">
+
+<!-- ===================== SIDEBAR ===================== -->
+<div class="w-64 h-screen bg-black bg-opacity-40 backdrop-blur-xl text-white p-6 fixed border-r border-gray-800">
+
+<h1 class="text-2xl font-bold mb-10 text-purple-400">🤖 SkillAI</h1>
+
+<ul class="space-y-4 text-sm">
+
+<li><a href="/dashboard" class="block hover:bg-purple-600 p-2 rounded">🏠 Dashboard</a></li>
+<li><a href="/find-matches" class="block hover:bg-purple-600 p-2 rounded">🔍 AI Matches</a></li>
+<li><a href="/my-sessions" class="block hover:bg-purple-600 p-2 rounded">📅 My Sessions</a></li>
+<li><a href="/code-editor" class="block hover:bg-purple-600 p-2 rounded">💻 Coding Lab</a></li>
+<li><a href="/leaderboard" class="block hover:bg-purple-600 p-2 rounded">🏆 Leaderboard</a></li>
+<li><a href="/analytics" class="block hover:bg-purple-600 p-2 rounded">📊 Analytics</a></li>
+<li><a href="/discussions" class="block hover:bg-purple-600 p-2 rounded">💬 Discussions</a></li>
+
+<hr class="border-gray-700 my-4">
+
+<li><a href="/predict-success" class="block hover:bg-purple-600 p-2 rounded">🤖 AI Prediction</a></li>
+<li><a href="/feature-importance" class="block hover:bg-purple-600 p-2 rounded">📈 Feature Importance</a></li>
+<li><a href="/roc-curve" class="block hover:bg-purple-600 p-2 rounded">📊 ROC Curve</a></li>
+
+<li class="mt-10">
+<a href="/logout" class="block bg-red-600 text-white p-2 rounded text-center hover:bg-red-700">
+Logout
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<!-- ===================== MAIN CONTENT ===================== -->
+<div class="ml-64 w-full p-10">
+
+<!-- Welcome -->
+<div class="mb-10">
+<h2 class="text-3xl font-bold text-purple-400 float">
+Welcome {{name}} 👋
+</h2>
+<p class="text-gray-400 mt-2">
+AI-Powered Intelligent Learning Platform
+</p>
+</div>
+
+<!-- ===================== SUMMARY CARDS ===================== -->
+<div class="grid grid-cols-3 gap-6 mb-12">
+
+<div class="glass p-6 hover:scale-105 transition">
+<h3 class="text-gray-300 text-sm">Teach Skills</h3>
+<p class="text-3xl font-bold text-purple-400">
+{{ teach_skills|length }}
+</p>
+</div>
+
+<div class="glass p-6 hover:scale-105 transition">
+<h3 class="text-gray-300 text-sm">Learn Skills</h3>
+<p class="text-3xl font-bold text-green-400">
+{{ learn_skills|length }}
+</p>
+</div>
+
+<div class="glass p-6 hover:scale-105 transition">
+<h3 class="text-gray-300 text-sm">AI Engine</h3>
+<p class="text-lg font-semibold text-indigo-400">
+Active 🔥
+</p>
+</div>
+
+</div>
+
+<!-- ===================== SKILLS SECTION ===================== -->
+<div class="grid grid-cols-2 gap-10 mb-12">
+
+<!-- Teach Skills -->
+<div class="glass p-6">
+<h2 class="text-xl font-bold text-purple-400 mb-4">
+🎓 Skills I Can Teach
+</h2>
+
+{% if teach_skills %}
+<div class="flex flex-wrap gap-3">
+{% for s in teach_skills %}
+<div class="bg-white bg-opacity-10 px-4 py-2 rounded-full flex items-center space-x-3 border border-gray-700">
+
+<span class="font-semibold text-purple-300">{{s.skill}}</span>
+
+<a href="/edit-skill/{{s.id}}" class="text-blue-400 text-sm hover:underline">Edit</a>
+<a href="/delete-skill/{{s.id}}" class="text-red-400 text-sm hover:underline">Delete</a>
+
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="text-gray-500">No teach skills added</p>
+{% endif %}
+
+</div>
+
+<!-- Learn Skills -->
+<div class="glass p-6">
+<h2 class="text-xl font-bold text-green-400 mb-4">
+📚 Skills I Want to Learn
+</h2>
+
+{% if learn_skills %}
+<div class="flex flex-wrap gap-3">
+{% for s in learn_skills %}
+<div class="bg-white bg-opacity-10 px-4 py-2 rounded-full flex items-center space-x-3 border border-gray-700">
+
+<span class="font-semibold text-green-300">{{s.skill}}</span>
+
+<a href="/edit-skill/{{s.id}}" class="text-blue-400 text-sm hover:underline">Edit</a>
+<a href="/delete-skill/{{s.id}}" class="text-red-400 text-sm hover:underline">Delete</a>
+
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="text-gray-500">No learn skills added</p>
+{% endif %}
+
+</div>
+
+</div>
+
+<!-- ===================== QUICK ACTIONS ===================== -->
+<h2 class="text-2xl font-bold mb-6 text-gray-300">🚀 Quick Actions</h2>
+
+<div class="grid grid-cols-3 gap-8">
+
+<div class="glass p-6 text-center hover:scale-105 transition">
+<h3 class="text-lg font-bold mb-2 text-purple-300">Add Skills</h3>
+<a href="/add-skill-page">
+<button class="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-800">
+Add
+</button>
+</a>
+</div>
+
+<div class="glass p-6 text-center hover:scale-105 transition">
+<h3 class="text-lg font-bold mb-2 text-green-300">AI Matches</h3>
+<a href="/find-matches">
+<button class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-800">
+Find
+</button>
+</a>
+</div>
+
+<div class="glass p-6 text-center hover:scale-105 transition">
+<h3 class="text-lg font-bold mb-2 text-indigo-300">Coding Lab</h3>
+<a href="/code-editor">
+<button class="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-800">
+Open
+</button>
+</a>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

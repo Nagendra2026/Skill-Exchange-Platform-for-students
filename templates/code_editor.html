@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Code Editor</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<div class="bg-black text-white p-5 flex justify-between">
+<h1 class="text-2xl font-bold">Coding Practice Editor 💻</h1>
+
+<a href="/dashboard">
+<button class="bg-white text-black px-4 py-2 rounded">Dashboard</button>
+</a>
+</div>
+
+<div class="p-10">
+
+<!-- Language -->
+<select id="language" class="border p-3 rounded w-full mb-4">
+<option value="python">Python</option>
+<option value="java">Java</option>
+<option value="c">C</option>
+<option value="cpp">C++</option>
+<option value="javascript">JavaScript</option>
+</select>
+
+
+<!-- Code -->
+<label class="font-bold">Write Code</label>
+<textarea id="code" rows="12"
+class="border p-4 w-full rounded font-mono"
+placeholder="print('Hello world')"></textarea>
+
+<!-- Buttons -->
+<div class="mt-6 flex gap-4">
+
+<button onclick="runCode()" 
+class="bg-green-600 text-white px-6 py-3 rounded font-bold hover:bg-green-800">
+Run Code ▶
+</button>
+
+<button onclick="submitCode()" 
+class="bg-purple-700 text-white px-6 py-3 rounded font-bold hover:bg-purple-900">
+Submit
+</button>
+
+<button onclick="clearCode()" 
+class="bg-gray-500 text-white px-6 py-3 rounded font-bold">
+Clear
+</button>
+
+<button onclick="aiHelp()" 
+class="bg-blue-600 text-white px-6 py-3 rounded font-bold hover:bg-blue-800">
+AI Help 🤖
+</button>
+
+
+</div>
+
+<!-- Output -->
+<div class="mt-6">
+<label class="font-bold text-white">Output</label>
+<pre id="output" class="bg-black text-green-400 p-4 rounded h-40 overflow-auto"></pre>
+</div>
+
+<div class="mt-6">
+  <label class="font-bold text-white">AI Suggestions</label>
+  <pre id="ai_output" class="bg-white text-black p-4 rounded h-40 overflow-auto"></pre>
+</div>
+
+
+
+</div>
+
+<script>
+
+function runCode(){
+let code=document.getElementById("code").value
+let language=document.getElementById("language").value
+
+fetch("/run-code",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({code:code,language:language})
+})
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("output").innerText=data.output
+})
+}
+
+
+function submitCode(){
+let language="python"
+let code=document.getElementById("code").value
+
+fetch("/submit-code",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({language:language,code:code})
+})
+.then(res=>res.json())
+.then(data=>{
+alert("Code submitted successfully")
+})
+}
+
+function clearCode(){
+document.getElementById("code").value=""
+document.getElementById("output").innerText=""
+}
+
+function aiHelp(){
+let code=document.getElementById("code").value
+
+fetch("/ai-help",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({code:code})
+})
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("ai_output").innerText=data.suggestion
+})
+}
+
+
+</script>
+
+</body>
+</html>

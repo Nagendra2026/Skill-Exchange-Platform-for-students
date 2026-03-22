@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Faculty Panel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<div class="bg-purple-700 text-white p-5 flex justify-between items-center">
+<h1 class="text-2xl font-bold">Faculty Dashboard</h1>
+
+<a href="/logout">
+<button class="bg-white text-purple-700 px-4 py-2 rounded font-bold">
+Logout
+</button>
+</a>
+</div>
+
+<div class="p-10">
+
+<h2 class="text-2xl font-bold mb-6">Student Session Requests</h2>
+
+<table class="w-full bg-white shadow-lg rounded-xl overflow-hidden">
+
+<tr class="bg-purple-700 text-white">
+<th class="p-3">Student Name</th>
+<th>Skill</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for s in sessions %}
+<tr class="text-center border-b">
+<td class="p-3">{{s.student}}</td>
+<td>{{s.skill}}</td>
+<td>
+{% if s.status == "approved" %}
+<span class="text-green-600 font-bold">Approved</span>
+{% elif s.status == "rejected" %}
+<span class="text-red-600 font-bold">Rejected</span>
+{% else %}
+<span class="text-yellow-600 font-bold">Pending</span>
+{% endif %}
+</td>
+
+<td>
+{% if s.status == "pending" %}
+<button onclick="approveSession('{{s.sid}}')" class="bg-green-600 text-white px-3 py-1 rounded">Approve</button>
+<button onclick="rejectSession('{{s.sid}}')" class="bg-red-600 text-white px-3 py-1 rounded">Reject</button>
+{% else %}
+<span class="text-gray-500">Action Done</span>
+{% endif %}
+</td>
+
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+<!-- JS -->
+<script>
+function approveSession(id){
+fetch("/approve/"+id,{
+method:"POST"
+})
+.then(response=>response.text())
+.then(data=>{
+alert("Session Approved + Zoom Link Generated 🔥");
+location.reload();
+})
+.catch(err=>{
+alert("Error approving session");
+console.log(err);
+});
+}
+
+function rejectSession(id){
+fetch("/reject/"+id,{
+method:"POST"
+})
+.then(()=>{
+alert("Session Rejected");
+location.reload();
+})
+.catch(err=>{
+alert("Error rejecting session");
+console.log(err);
+});
+}
+</script>
+
+</body>
+</html>

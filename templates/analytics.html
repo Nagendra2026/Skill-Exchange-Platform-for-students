@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Analytics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+body{
+background: linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);
+min-height:100vh;
+}
+
+/* Glass effect */
+.glass{
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(20px);
+border-radius:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Floating animation */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0px);}
+}
+
+.float{
+animation: float 4s ease-in-out infinite;
+}
+</style>
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<div class="bg-purple-700 text-white p-5 flex justify-between">
+<h1 class="text-2xl font-bold">Learning Analytics 📊</h1>
+
+<a href="/dashboard">
+<button class="bg-white text-purple-700 px-4 py-2 rounded">Dashboard</button>
+</a>
+</div>
+
+<div class="p-10 grid grid-cols-2 gap-10">
+
+<!-- Total submissions -->
+<div class="bg-white p-8 rounded-xl shadow">
+<h2 class="text-xl font-bold mb-4">Total Code Submissions</h2>
+<p class="text-5xl font-bold text-purple-700">{{total}}</p>
+</div>
+
+<!-- Language usage -->
+<div class="bg-white p-8 rounded-xl shadow">
+<h2 class="text-xl font-bold mb-4">Languages Practiced</h2>
+
+<ul>
+{% for l in languages %}
+<li class="mb-2">
+{{l.language}} — <b>{{l.total}}</b>
+</li>
+{% endfor %}
+</ul>
+</div>
+
+</div>
+
+<!-- Recent activity -->
+<div class="p-10">
+<div class="bg-white p-8 rounded-xl shadow">
+
+<h2 class="text-xl font-bold mb-4">Recent Practice Activity</h2>
+
+<table class="w-full">
+
+<tr class="border-b">
+<th class="text-left p-2">Language</th>
+<th class="text-left p-2">Date</th>
+</tr>
+
+{% for r in recent %}
+<tr class="border-b">
+<td class="p-2">{{r.language}}</td>
+<td class="p-2">{{r.created_at}}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+</div>
+
+</body>
+</html>
