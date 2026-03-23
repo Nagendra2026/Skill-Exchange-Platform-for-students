@@ -9,7 +9,7 @@ import numpy as np
 from ml_engine.matching import compute_similarity
 
 app = Flask(__name__)
-app.secret_key = "secret"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key-change-in-production")
 
 # ---------------- DATABASE INITIALIZATION ----------------
 def init_db():
